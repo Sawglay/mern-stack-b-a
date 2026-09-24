@@ -1,21 +1,12 @@
 const express = require('express');
+const BlogController = require('../controllers/BlogController');
 
 const router = express.Router();
-const Blog = require('../models/Blog');
-const BlogController = require('../controller/BlogController');
 
-router.get('',BlogController.index);
+router.get('', BlogController.index);
+router.post('', BlogController.store);
+router.get('/create', BlogController.create);
+router.post('/:id/delete', BlogController.destroy)
+router.get('/:id', BlogController.show)
 
-router.post("/blogs", async (req, res) => {
-  let { title, intro, body } = req.body;
-
-  let blog = new Blog({
-    title,
-    intro,
-    body,
-  });
-
-  await blog.save();
-
-  res.redirect("/");
-});
+module.exports = router;

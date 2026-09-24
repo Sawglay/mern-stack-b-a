@@ -8,13 +8,6 @@ const Blog = require("./models/Blog");
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-
-app.set("views", "./views"); //middleware
-app.set("view engine", "ejs"); //middleware
-
-app.use(expressLayouts);
-app.set("layout", "layouts/defaults");
-
 // app.get('/', (req, res) => {
 //   res.sendFile('./cleanServer/home.html', { root: __dirname })
 // })
@@ -37,6 +30,21 @@ app.set("layout", "layouts/defaults");
 //    next();
 //  }
 
+//With every setup finished for example, if database setup finished, the server should respond
+let mongoURL =
+  "mongodb+srv://sawglay2_db_user:Hmh77001@cluster0.stuhbwx.mongodb.net/?appName=Cluster0";
+mongoose.connect(mongoURL).then(() => {
+  console.log("Connected to db");
+  app.listen(3000, () => {
+    console.log("App is running on port 3000");
+  });
+});
+
+app.set("views", "./views"); //middleware
+app.set("view engine", "ejs"); //middleware
+app.use(expressLayouts);
+app.set("layout", "layouts/defaults");
+
 app.use(morgan("dev"));
 app.use(express.static("public"));
 
@@ -51,15 +59,6 @@ app.get("/add-blog", async (req, res) => {
   res.send("blog saved");
 });
 
-//With every setup finished for example, if database setup finished, the server should respond
-let mongoURL =
-  "mongodb+srv://sawglay2_db_user:Hmh77001@cluster0.stuhbwx.mongodb.net/?appName=Cluster0";
-mongoose.connect(mongoURL).then(() => {
-  console.log("Connected to db");
-  app.listen(3000, () => {
-    console.log("App is running on port 3000");
-  });
-});
 
 app.get("/", async (req, res) => {
   res.redirect("/blogs");
@@ -76,38 +75,6 @@ app.get("/about", (req, res) => {
   res.render("about", {
     title: "About",
   });
-});
-
-app.get("/blogs/create", (req, res) => {
-  res.render("blogs/create", {
-    title: "Blog Create",
-  });
-});
-
-app.post("/blogs/:id/delete", async (req, res, next) => {
-  try {
-    let id = req.params.id;
-    let blog = await Blog.findByIdAndDelete(id);
-    res.redirect("/");
-  } catch (e) {
-    console.log(e);
-    next();
-  }
-});
-
-app.get("/blogs/:id", async (req, res, next) => {
-  try {
-    let id = req.params.id;
-    let blog = await Blog.findById(id);
-    // res.json(blog);
-    res.render("blogs/show", {
-      blog,
-      title: "Blog details",
-    });
-  } catch (e) {
-    console.log(e);
-    next();
-  }
 });
 
 //Redirect
