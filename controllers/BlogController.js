@@ -26,7 +26,7 @@ const BlogController = {
   },
 
   create : (req, res) => {
-  res.render('blog/create', {
+  res.render('blogs/create', {
     title : 'Blog Create'
   });
 },
@@ -48,7 +48,7 @@ const BlogController = {
   destroy : async (req, res,next) => {
   try {
     let id = req.params.id;
-    await Blog.findByDelete(id);
+    await Blog.findByIdAndDelete(id);
     res.redirect('/');
   }catch(e) {
     console.log(e);

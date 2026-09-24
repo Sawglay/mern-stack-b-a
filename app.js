@@ -3,7 +3,7 @@ let morgan = require("morgan");
 
 const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
-
+const blogRoutes = require('./routes/blogRoutes');
 const Blog = require("./models/Blog");
 const app = express();
 
@@ -64,6 +64,11 @@ app.get("/", async (req, res) => {
   res.redirect("/blogs");
 });
 
+app.get("/about", (req, res) => {
+  res.render("about", {
+    title: "About",
+  });
+});
 
 app.get("/contact", (req, res) => {
   res.render("contact", {
@@ -71,16 +76,12 @@ app.get("/contact", (req, res) => {
   });
 });
 
-app.get("/about", (req, res) => {
-  res.render("about", {
-    title: "About",
-  });
-});
-
 //Redirect
 app.get("/contact-us", (req, res) => {
   res.redirect("contact");
 });
+
+app.use('/blogs',blogRoutes);
 
 //404 Page
 //Express, Route with Order is important
