@@ -12,3 +12,20 @@ A small blog application built while learning Node.js and backend development. V
 - Delete a post
 - About and Contact pages
 - Custom 404 page and request logging
+
+## Tech stack
+
+Node.js, Express, EJS, Mongoose, MongoDB, `express-ejs-layouts`, Morgan, and Nodemon. The repository also contains separate Node.js practice scripts for the file system, HTTP server, modules, globals, and streams.
+
+## Getting started
+
+You need Node.js with npm and a MongoDB database (local or Atlas). Run commands from the project root.
+
+**The archived version needs the three fixes below before it can run reliably:**
+
+1. **Install the missing dependencies.** `app.js` imports Mongoose and `express-ejs-layouts`, but neither is declared in the supplied `package.json`.
+
+   ```bash
+   npm install
+   npm install mongoose express-ejs-layouts
+   ```
