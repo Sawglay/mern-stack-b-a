@@ -41,3 +41,14 @@ You need Node.js with npm and a MongoDB database (local or Atlas). Run commands 
    const mongoURL = process.env.MONGODB_URI;
    if (!mongoURL) throw new Error('MONGODB_URI is required');
    ```
+
+   Set the variable in your terminal before starting the app. For example, in Bash:
+
+   ```bash
+   export MONGODB_URI='mongodb://127.0.0.1:27017/bloggy'
+   npm start
+   ```
+
+   Or, for an Atlas database, set `MONGODB_URI` to your own Atlas connection string. In PowerShell, set it with `$env:MONGODB_URI = 'your-connection-string'` before running `npm start`. The `.gitignore` excludes `.env`, but the current application does not load `.env` automatically.
+
+Then open **http://localhost:3000**. The server starts after MongoDB connects successfully. `npm start` runs `nodemon app.js`, so it restarts during development when files change.
