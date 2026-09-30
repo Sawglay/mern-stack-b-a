@@ -29,3 +29,15 @@ You need Node.js with npm and a MongoDB database (local or Atlas). Run commands 
    npm install
    npm install mongoose express-ejs-layouts
    ```
+2. **Correct the route filename in `app.js`.** The file is named `routes/BlogRoutes.js`, while the import uses a different capitalization. Use:
+
+   ```js
+   const blogRoutes = require('./routes/BlogRoutes');
+   ```
+
+3. **Move the MongoDB connection string out of `app.js`.** Replace the hard-coded `mongoURL` declaration with:
+
+   ```js
+   const mongoURL = process.env.MONGODB_URI;
+   if (!mongoURL) throw new Error('MONGODB_URI is required');
+   ```
