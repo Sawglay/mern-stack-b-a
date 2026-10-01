@@ -52,3 +52,40 @@ You need Node.js with npm and a MongoDB database (local or Atlas). Run commands 
    Or, for an Atlas database, set `MONGODB_URI` to your own Atlas connection string. In PowerShell, set it with `$env:MONGODB_URI = 'your-connection-string'` before running `npm start`. The `.gitignore` excludes `.env`, but the current application does not load `.env` automatically.
 
 Then open **http://localhost:3000**. The server starts after MongoDB connects successfully. `npm start` runs `nodemon app.js`, so it restarts during development when files change.
+
+
+**Security note:** The supplied `app.js` contains a database username and password. If those credentials are real, rotate the password in MongoDB Atlas and remove the connection string from the repository's current files and Git history before making it public. Do not put a real connection string in this README.
+
+## Routes
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/` | Redirect to the blog list |
+| `GET` | `/blogs` | List posts |
+| `GET` | `/blogs/create` | Show the new-post form |
+| `POST` | `/blogs` | Save a new post |
+| `GET` | `/blogs/:id` | Show a post |
+| `POST` | `/blogs/:id/delete` | Delete a post |
+| `GET` | `/about` | Show the About page |
+| `GET` | `/contact` | Show the Contact page |
+| `GET` | `/contact-us` | Redirect to Contact |
+| `GET` | `/add-blog` | Insert a sample post (development helper) |
+
+The `Blog` model requires `title`, `intro`, and `body` strings and adds `createdAt` and `updatedAt` timestamps. The About and Contact pages currently contain placeholder text. There is no authentication, edit-post feature, or automated test suite in this version.
+
+## Project layout
+
+```text
+app.js                   Express setup and main routes
+routes/BlogRoutes.js     Blog routes
+controllers/             Blog request handlers
+models/Blog.js           Mongoose blog schema
+views/                   EJS pages, components, and layout
+public/                  CSS and image asset
+Node/                    Node.js module and global examples
+FileSystem/              File system example
+httpServer/              Basic HTTP server example
+stream-buffer/           Stream example and sample text
+```
+
+The practice scripts are independent of the blog app. For example, run `node Node/module2.js` to see the module example; run `npm start` for the blog application.
